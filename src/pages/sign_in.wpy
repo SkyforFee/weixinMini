@@ -1,0 +1,22 @@
+<template>
+	<view class="container">
+		今天是**年**月**日。欢迎光临
+	</view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class Signin extends wepy.page{
+	config={
+		navigationBarTitleText:'签到'
+	}
+	data={
+      	time:'',
+	}
+	onLoad(){
+		console.log('...')
+		var time = new Date();
+		debugger;
+		console.log(time);
+	}
+}
+</script>

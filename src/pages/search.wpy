@@ -1,0 +1,65 @@
+<template>
+	<view class="container">
+		<search @searchValue.user="doSearch"></search>
+    <view class="doc">历史记录</view>
+    <view class="doc">{{time}}</view>
+	</view>
+</template>
+
+<script>
+	import Searchs from '../components/search';
+  import wepy from 'wepy';
+	export default class Search extends wepy.page{
+		config={
+			navigationBarTitleText:'搜索'
+		}
+		components={
+			search: Searchs,
+		}
+		data={
+      time:new Date().getTime(),
+		}
+		methods={
+			doSearch(val) {
+				console.log(val);
+			}
+		}
+	}
+</script>
+<style lang="less">
+  .history {
+    padding: 20px 27px;
+  }
+  .doc {
+    color: #999;
+    font-size: 26rpx;
+  }
+  .lable {
+    margin-top: 20rpx;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: -20rpx;
+    .child {
+      background: #dedede;
+      padding: 10rpx 20rpx;
+      border-radius: 300rpx;
+      margin-left: 20rpx;
+      font-size: 26rpx;
+      margin-top: 5rpx;
+      color: #000;
+    }
+  }
+  .btn_box {
+    width: 377rpx;
+    margin: 0 auto;
+    padding-top: 88rpx;
+    .button {
+      color: #999;
+    }
+  }
+  .active {
+    border: 1px solid #f23737;
+    color: #f23737;
+  }
+</style>

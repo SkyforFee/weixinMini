@@ -1,0 +1,10 @@
+<template>
+	<text>
+		我是个人中心
+	</text>
+</template>
+<script>
+	export default class first extends wepy.page{
+		
+	}
+</script>
