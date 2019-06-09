@@ -1,0 +1,16 @@
+<template>
+	<view>
+		{{test}}
+	</view>
+</template>
+<script>
+	import wepy from 'wepy';
+	export default class ReplenishmentFoods extends wepy.page{
+		config={
+			navigationBarTitleText:'补货'
+		}
+		data={
+			test:'测试Tabtitle显示'
+		}
+	}
+</script>

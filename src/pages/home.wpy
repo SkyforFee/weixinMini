@@ -1,41 +1,94 @@
 <template>
   <view class="container">
-    <view class="pos">
-      <view class="search_read_only">
-        <navigator class="search_content" open-type="navigate" url="/pages/search">
-          <i class="iconfont icon-search"></i>
-          <view class="search_input">搜索商品</view>
-        </navigator>
-        <navigator class="message" url="/pages/messages">
-          <i class="iconfont icon-message cfff"></i>
-          <view class="doc cfff">消息</view>
-        </navigator>
-      </view>
-    </view>
-    <view class="nav_list">
-      <navigator open-type="navigate" url="/pages/sign_in">
-        <image src="../images/icon_nav_01_new.png" class="nav_icon"></image>
-        <view class="nav_text">签到有礼</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/exchange_goods">
-        <image src="../images/icon_nav_02_new.png" class="nav_icon"></image>
-        <view class="nav_text">换货专区</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/wholesale">
-        <image src="../images/icon_nav_03_new.png" class="nav_icon"></image>
-        <view class="nav_text">特价专区</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/replenishment_goods">
-        <image src="../images/icon_nav_04_new.png" class="nav_icon"></image>
-        <view class="nav_text">我要补货</view>
-      </navigator>
-    </view>
+    <scroll-view wx:if='{{isShow}}' scroll-y="true" style="height:{{scrollHeight}}px" bindscrolltolower="lower">
+      <swiper class="swiper" indicator-active-color="{{indicatorActiveColor}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
+        <block wx:for="{{adList}}" wx:key="key">
+          <swiper-item>
+            <image src="{{item.picUrl}}" class="slide-image" @tap="goToAdvert({{item.advertUrl}})" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <!--商品列表模块-->
+      <discover :list.sync="discoverList"></discover>
+    </scroll-view>
+    <!--加载更多时动画-->
+    <bottomLoadMore :show.sync="showLoading" message="正在加载"></bottomLoadMore>
   </view>
 </template>
 <script>
 import wepy from 'wepy';
+import Discover from '@/components/discover';
+import BottomLoadMore from "../components/common/bottomLoadMore";
+import tip from '@/utils/tip'
+import {
+  SYSTEM_INFO
+} from '@/utils/constant';
 export default class first extends wepy.page {
+  config = {
+    navigationBarTitleText: '演示商城',
+  }
+  components = {
+    discover: Discover,
+    bottomLoadMore: BottomLoadMore
+  }
+  data = {
+    indicatorDots: true,
+    indicatorActiveColor: "#fff",
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
+    scrollHeight: '',
+    isShow: true,
+    adList: [
+      { picUrl: "../images/selected.png", advertUrl: 'hehehe' },
+      { picUrl: "../images/normal.png", advertUrl: 'hehehea' }
+    ],
+    showLoading: false,
+    discoverList: [],
+  }
+  onLoad() {
+    let systemInfo = wepy.getSystemInfoSync();
+    wepy.setStorageSync(SYSTEM_INFO, systemInfo);
+    this.scrollHeight = systemInfo.windowHeight;
+    this.isShow = true;
+    this.discoverList = [
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+    ];
+    // this.showLoading=false;
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        tip.loading()
+        resolve()
+      }, 500);
+    }).then(() => {
+      setTimeout(() => {
+        tip.loaded()
+      }, 1000)
+    })
+  }
+  onShow() {}
+  methods = {
+    lower() {
+      tip.loading()
+      this.discoverList.push(
+        { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' }, { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' }, { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' }, 
+        )
+      tip.loaded()
+    }
 
+  }
 }
 
 </script>
@@ -45,19 +98,23 @@ export default class first extends wepy.page {
   top: 0rpx;
   left: 0;
   right: 0;
+
   .search_content {
     background: rgba(0, 0, 0, 0.1);
     border: 1px solid #efefee;
+
     .icon-search,
     .search_input {
       color: #efefee;
     }
   }
+
   .message {
     display: block;
     text-align: center;
     margin-left: 20rpx;
   }
+
   .doc {
     font-size: 16rpx;
     display: block;
@@ -71,15 +128,18 @@ export default class first extends wepy.page {
   font-size: 26rpx;
   justify-content: space-between;
   padding: 100rpx 50rpx;
+
   navigator {
     text-align: center
   }
+
   .nav_icon {
     height: 80rpx;
     margin: 0 auto;
     width: 80rpx;
     margin-bottom: 14rpx;
   }
+
   .nav_text {
     font-size: 26rpx
   }
@@ -90,4 +150,5 @@ export default class first extends wepy.page {
   text-align: center;
   color: #333;
 }
+
 </style>

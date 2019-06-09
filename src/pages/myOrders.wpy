@@ -1,0 +1,29 @@
+<template>
+	<view>
+		<tab :tabList.sync="tabList" :currentTab.sync="currentTab">
+		</tab>
+	</view>
+</template>
+<script>
+import wepy from 'wepy';
+import Tab from '@/components/tab'
+export default class myOrders extends wepy.page{
+	config={
+		navigationBarTitleText: '我的订单'
+	}
+	components={
+		tab: Tab,
+	}
+	onLoad(option){
+		
+		this.currentTab=option.tabNum
+	}
+	data={
+		tabList: ["待付款", "待收货", "已收货", "已取消","售后"],
+		currentTab:0,
+	}
+} 
+</script>
+<style lang='less'>
+
+</style>

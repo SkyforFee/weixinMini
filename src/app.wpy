@@ -20,14 +20,19 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/index',
       'pages/home',
+      'pages/search',
+      'pages/sign_in',
+      'pages/exchange_goods',
+      'pages/wholesale',
+      'pages/replenishment_goods',
       'pages/classify',
       'pages/shop_cart',
       'pages/info',
-      'pages/first',
-      'pages/index',
-      'pages/search',
-      'pages/sign_in',
+      'pages/myOrders',
+      'pages/goods_detail',
+     
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -43,24 +48,26 @@ export default class extends wepy.app {
       "list": [
         {
           "pagePath": "pages/home",
-          "text": "首页",
-          "iconPath": "images/icon_home.png",
-          "selectedIconPath": "images/icon_home_active.png"
+          "text": "物语",
+          "iconPath": "images/home_icon_story_default.png",
+          "selectedIconPath": "images/home_icon_story_select.png"
         }, {
           "pagePath": "pages/classify",
-          "text": "分类",
+          "text": "格子铺",
           "iconPath": "images/icon_classify.png",
           "selectedIconPath": "images/icon_classify_active.png"
-        }, {
-          "pagePath": "pages/shop_cart",
-          "text": "购物车",
-          "iconPath": "images/icon_shop_cart.png",
-          "selectedIconPath": "images/icon_shop_cart_active.png"
-        }, {
+        }, 
+        // {
+        //   "pagePath": "pages/shop_cart",
+        //   "text": "购物车",
+        //   "iconPath": "images/icon_shop_cart.png",
+        //   "selectedIconPath": "images/icon_shop_cart_active.png"
+        // },
+         {
           "pagePath": "pages/info",
-          "text": "我",
-          "iconPath": "images/icon_info.png",
-          "selectedIconPath": "images/icon_info_active.png"
+          "text": "我的",
+          "iconPath": "images/home_icon_me_default.png",
+          "selectedIconPath": "images/home_icon_me_select.png"
         }
       ]
     }
@@ -75,8 +82,7 @@ export default class extends wepy.app {
     this.use('requestfix')
   }
 
-  onLaunch() {
-    this.testAsync()
+  async onLaunch() {
   }
 
   sleep(s) {
@@ -90,19 +96,6 @@ export default class extends wepy.app {
   async testAsync() {
     const data = await this.sleep(3)
     console.log(data)
-  }
-
-  getUserInfo(cb) {
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success(res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
   }
 }
 

@@ -1,7 +1,12 @@
 <template>
 	<view class="container">
-		今天是**年**月**日。欢迎光临
+		<image class="bgImg" src="../images/bc_qdyl.png" />
+		<view class="timeFont">
+			<text>现在是{{year}}年{{month}}月{{day}}日{{hour}}时{{minute}}分{{second}}秒。</text>
+			<text>欢迎光临</text>
+		</view>
 	</view>
+	
 </template>
 <script>
 import wepy from 'wepy';
@@ -10,13 +15,41 @@ export default class Signin extends wepy.page{
 		navigationBarTitleText:'签到'
 	}
 	data={
-      	time:'',
+      	year:'',
+      	month:'',
+      	day:'',
+      	hour:'',
+      	minute:'',
+      	second:'',
 	}
 	onLoad(){
-		console.log('...')
-		var time = new Date();
-		debugger;
-		console.log(time);
+		setInterval(()=>{
+			let mydate = new Date();
+			this.year=mydate.getFullYear();
+			this.month=mydate.getMonth()+1;
+			this.day=mydate.getDate();
+			this.hour=mydate.getHours(),
+			this.minute=mydate.getMinutes(),
+			this.second=mydate.getSeconds(),
+			this.$apply()
+		},1000)
 	}
 }
 </script>
+<style lang ="less">
+.container{
+	position: relative;
+	top: 10rpx;
+	color:black;
+	width: 750rpx;
+	height: 400rpx;
+	.bgImg{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.timeFont{
+	position: absolute;
+	}
+}
+</style>

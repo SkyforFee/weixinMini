@@ -10,6 +10,12 @@ page {
 .container {
   position: relative;
   background: #ffffff;
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
 }
 
 .no_data {
@@ -19,6 +25,7 @@ page {
   text-align: center;
   color: #8b8b8b;
   padding-top: 20rpx;
+
   .iconfont {
     font-size: 40rpx;
   }
@@ -30,11 +37,13 @@ page {
   justify-content: center;
   margin: 15rpx auto;
   width: 220rpx;
+
   text {
     font-size: 30rpx;
     color: #999;
     margin-left: 10rpx;
   }
+
   image {
     width: 30rpx;
     height: 30rpx;

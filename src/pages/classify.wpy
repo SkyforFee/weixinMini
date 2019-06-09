@@ -4,6 +4,7 @@
 	</text>
 </template>
 <script>
+	import wepy from 'wepy';
 	export default class first extends wepy.page{
 		
 	}

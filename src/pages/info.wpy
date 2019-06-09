@@ -1,10 +1,107 @@
 <template>
-	<text>
-		我是个人中心
-	</text>
+  <view class="container">
+    <view class="infoTitle">
+      <image class="titile_img" src="../images/icon_nav_01_new.png" />
+    </view>
+    <view class="wait_content">
+      <navigator class="wait_item" wx:for="{{myLists}}" open-type="navigate" wx:key="key" url="{{item.url}}?tabNum={{item.code}}" >
+        <image src="{{item.logo}}" class="wait_img" />
+        <text class="wait_text">{{item.name}}</text>
+      </navigator>
+    </view>
+    <view class="money_content">
+      <navigator class="money_item" wx:for="{{moneyList}}" open-type="navigate" wx:key="key" url="{{item.url}}">
+        <image src="{{item.logo}}" class="money_item" />
+        <text class="money_text">{{item.name}}</text>
+      </navigator>
+    </view>
+  </view>
 </template>
 <script>
-	export default class first extends wepy.page{
-		
-	}
+import wepy from 'wepy';
+export default class first extends wepy.page {
+  config = {
+    navigationBarTitleText: '个人中心'
+  }
+  data = {
+    myLists: [
+      { logo: "../images/selected.png", name: '待付款', url: '/pages/myOrders',code:0 },
+      { logo: "../images/normal.png", name: '待收货', url: '/pages/myOrders',code:1  },
+      { logo: "../images/selected.png", name: '待评价', url: '/pages/myOrders',code:2  },
+      { logo: "../images/normal.png", name: '售后', url: '/pages/myOrders',code:3  },
+    ],
+    moneyList: [
+      { logo: "../images/normal.png", name: '我的钱包', url: '' },
+      { logo: "../images/selected.png", name: '地址管理', url: '' },
+      { logo: "../images/normal.png", name: '绑定手机', url: '' },
+    ]
+  }
+  onload() {}
+  methods = {
+  }
+
+}
+
 </script>
+<style lang="less">
+.infoTitle {
+  display: flex;
+  height: 210rpx;
+  justify-content: center;
+  align-items: center;
+
+  .titile_img {
+    height: 200rpx;
+  }
+}
+
+.wait_content {
+  display: flex;
+  justify-content: space-around;
+  height: 200rpx;
+  width: 100%;
+  background: #ccc;
+
+  .wait_item {
+    width: 100%;
+    height: 160rpx;
+
+    .wait_img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .wait_text {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.money_content {
+  display: flex;
+  justify-content: space-around;
+  height: 200rpx;
+  width: 100%;
+
+  .money_item {
+    width: 100%;
+    height: 160rpx;
+
+    .money_img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .money_text {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+</style>

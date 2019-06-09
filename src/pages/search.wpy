@@ -7,7 +7,7 @@
 </template>
 
 <script>
-	import Searchs from '../components/search';
+	import Searchs from '@/components/search';
   import wepy from 'wepy';
 	export default class Search extends wepy.page{
 		config={
@@ -17,7 +17,7 @@
 			search: Searchs,
 		}
 		data={
-      time:new Date().getTime(),
+      time:new Date(),
 		}
 		methods={
 			doSearch(val) {

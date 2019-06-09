@@ -1,5 +1,5 @@
 <template>
-  <view wx:if="{{show == 1}}" class="content">
+  <view wx:if="{{show==1}}" class="content">
     <view class="search">
       <view class="serch_content">
         <i class="iconfont icon-search"></i>
@@ -12,44 +12,44 @@
   </view>
 </template>
 <script>
-  import wepy from 'wepy';
-  export default class Search extends wepy.component {
-    data = {
-      search_input_value: '',
-      show : 1
-    }
+import wepy from 'wepy';
+export default class Search extends wepy.component {
+  data = {
+    search_input_value: '',
+    show : 1
+  }
 
-    events = {
+  events = {
 
-    }
-    methods = {
-      searchInput(e) {
-        this.search_input_value = e.detail.value;
-        this.$apply();
-      },
-      goBack() {
-        wepy.navigateBack({
-          delta: 1 // 回退前 delta(默认为1) 页面
+  }
+  methods = {
+    searchInput(e) {
+      this.search_input_value = e.detail.value;
+      this.$apply();
+    },
+    goBack() {
+      wepy.navigateBack({
+        delta: 1 // 回退前 delta(默认为1) 页面
 
-        })
-      },
-      search() {
-        this.$emit('searchValue', this.search_input_value);
-      },
-      delText() {
-        this.search_input_value = "";
-        this.$apply();
-      },
-      show(param){
-        this.show = param;
-        this.$apply();
-      }
-    }
-
-    onLoad() {
-
+      })
+    },
+    search() {
+      this.$emit('searchValue', this.search_input_value);
+    },
+    delText() {
+      this.search_input_value = "";
+      this.$apply();
+    },
+    show(param){
+      this.show = param;
+      this.$apply();
     }
   }
+
+  onLoad() {
+
+  }
+}
 
 </script>
 <style lang="less">

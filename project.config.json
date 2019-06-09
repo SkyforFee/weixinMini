@@ -4,11 +4,14 @@
 		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
-		"minified": false
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"appid": "wx3a6f218bd7a53658",
-	"projectname": "wxapp",
+	"appid": "wxaddc644b2f011e0d",
+	"projectname": "myproject",
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
