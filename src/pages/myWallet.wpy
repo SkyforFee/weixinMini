@@ -1,0 +1,159 @@
+<template>
+  <view>
+    <view class="walletbg">
+      <image class="walletImg" src="../images/balance_withdrawal_image_bg.png" mode="aspectFill" />
+      <view class="walletAmount">
+        <text class="amountText">当前金额(元)</text>
+        <text class="amountMoney">￥9888.00</text>
+      </view>
+    </view>
+    <view class="extractMoney">
+      <text class="extractText">提取金额</text>
+      <view class="extractInput">
+        <text class="extractText">￥</text>
+        <input class="number_input" placeholder="请输入提现金额" maxlength="11" type="tel" bindinput="getTelephone" />
+      </view>
+      <text class="extractTip">当月可以提<text style="color:#FF262C">2</text>次；手续费：<text style="color:#FF262C">￥0.00</text>元</text>
+    </view>
+    <view class="extractExplain">
+      <text class="explainTitle">提现说明</text>
+      <view class="exlainContent">
+        <text> 1、每次提现金额不少于5元，上限20000元。</text>
+        <text> 2、获得VIP用户头衔方可提现；</text>
+        <text> 3、每月可以提现2次；</text>
+        <text>4、操作提现暂不收取手续费（以后根据政策调整）；</text>
+        <text>5、提现需要绑定手机号；</text>
+        <text>6、提现将会通过微信的【通知服务】进行通知，打款到
+          微信零钱，请注意查收。</text>
+      </view>
+    </view>
+    <view class="extractBtn">
+    	<view class="extractView">
+    		<text>提现</text>
+    	</view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class myWallet extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的钱包'
+  }
+  data = {
+    getTelephone: ''
+  }
+  getTelephone(e) {
+    this.data.telephone = e.detail.value;
+  }
+}
+
+</script>
+<style lang="less">
+page {
+  background-color: #fff
+}
+
+.walletbg {
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  margin-top: 30rpx;
+  position: relative;
+
+  .walletImg {
+    width: 690rpx;
+    height: 230rpx;
+    position: relative;
+    z-index: -1;
+    border: 1px dotted #ccc;
+  }
+
+  .walletAmount {
+    position: absolute;
+    top: 48rpx;
+    left: 38rpx;
+    display: flex;
+    flex-direction: column;
+
+    .amountText {
+      color: #fff;
+      font-size: 28rpx;
+    }
+
+    .amountMoney {
+      margin-top: 10rpx;
+      margin-left: -10rpx;
+      font-size: 72rpx;
+      font-weight: bold;
+      color: #fff;
+
+    }
+  }
+}
+
+.extractMoney {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  margin-top: 59rpx;
+
+  .extractText {
+    color: '#333';
+    font-size: 36rpx;
+    font-weight: 500;
+  }
+
+  .extractInput {
+    display: flex;
+    margin-top: 49rpx;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+  }
+
+  .extractTip {
+    margin-top: 29rpx;
+  }
+}
+
+.extractExplain {
+  margin-top: 99rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+
+  .explainTitle {
+    font-weight: 500;
+    color: #333;
+    font-size: 32rpx;
+  }
+
+  .exlainContent {
+    display: flex;
+    flex-direction: column;
+    margin-top: 26rpx;
+    font-size: 28rpx;
+    color: #666;
+  }
+}
+.extractBtn{
+	position:absolute;
+	height: 98rpx;
+	width: 92%;
+	margin-left: 30rpx;
+	bottom:30rpx;
+	.extractView{
+		width: 690rpx;
+		height: 98rpx;
+		border-radius:49rpx;
+		display: flex;
+		justify-content: center;
+		align-items:center;
+		background-color:#ccc;
+		text{
+			color: #fff;
+			font-size: 36rpx;
+			font-weight: bold;
+		}
+	}
+}
+</style>

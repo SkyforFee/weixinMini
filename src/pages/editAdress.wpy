@@ -1,0 +1,247 @@
+<template>
+  <view>
+    <view class="addressContent">
+      <view class="addressItem">
+        <text class="itemText">姓名</text>
+        <input class="number_input" placeholder="请输入收货人姓名" maxlength="11" type="tel" bindinput="getName" />
+      </view>
+      <view class="addressItem">
+        <text class="itemText">手机号</text>
+        <input class="number_input" placeholder="请输入手机号码" maxlength="11" type="tel" bindinput="getTelephone" />
+      </view>
+      <view class="addressItem">
+        <text class="itemText">地址</text>
+        <view class="number_input" @tap='selectAddrss'>
+          <text class="addressText" wx:if="{{addressValue==''}}">请选择收货地址</text>
+          <text class="addressText" wx:if="{{addressValue!=''}}">{{addressValue}}</text>
+        </view>
+      </view>
+      <view class="addressItemDetail">
+        <text class="itemText">详细地址</text>
+        <input class="number_input" placeholder="如道路、门牌号、小区、楼栋号、单位室等" type="tel" bindinput="getClassifyAddress" />
+      </view>
+      <view class="panle_modelAdd {{hidden?'hidden':''}}" animation="{{animationData}}">
+        <view class="model_content">
+          <view class="head_box">
+            <text>请选择</text>
+          </view>
+          <view class="head_body">
+            <scroll-view scroll-y="true" style="height:420rpx">
+              <view class="rule_box" wx:for="{{adressDetail}}" item="item" wx:key="key" @tap="selectProvince" data-code="{{item}}">
+                <view class="title">{{item.name}}</view>
+                <view class="items">
+                  <!-- <view class="item {{item.current?'active':''}}"</view> -->
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+          <view class="colse_model" @tap="closeModel"><i class="iconfont icon-close"></i></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import api from '@/api/api';
+import {
+  SYSTEM_INFO
+} from '@/utils/constant';
+export default class editAdress extends wepy.page {
+  config = {
+    navigationBarTitleText: '编辑地址'
+  }
+  data = {
+    winHeight: '100%',
+    name: '',
+    telephone: '',
+    classifyAddress: '',
+    hidden: true,
+    addressValue: '',
+    animationData: "",
+    detail: {},
+    adressDetail: [],
+    areaCode:true,
+  }
+
+  onLoad() {
+    this.hidden = true;
+
+    this.detail = {
+      photoList: [
+        { photo: "../images/selected.png", advertUrl: 'hehehe' },
+        { photo: "../images/normal.png", advertUrl: 'hehehea' }
+      ],
+
+      name: '测试一下商品',
+      price: '13000',
+      stock: '2',
+      logo: '../images/selected.png'
+    }
+    api.getPronvince({
+      query: {
+        level: 1,
+        parentId: 100000
+      }
+    }).then((data) => {
+      this.adressDetail = data.data;
+      this.$apply();
+    })
+  }
+  selectProvince(val){
+    api.getPronvince({
+      query: {
+        level: this.areaCode ? 2 : 3,
+        parentId: val.currentTarget.dataset.code.number
+      }
+    }).then((data)=>{
+      if(data.data.length==0){
+        this.closeModel()
+      }
+      if(this.addressValue){
+        this.addressValue=this.addressValue+'-'+val.currentTarget.dataset.code.name;
+      }else{
+        this.addressValue=val.currentTarget.dataset.code.name
+      }
+      
+      this.adressDetail=data.data;
+      this.areaCode=false;
+      this.$apply()
+    })
+  }
+  onShow() {
+    // this.goodsIsFavorite();
+    //创建动画
+    var animation = wx.createAnimation({
+      transformOrigin: "50% 50%",
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation;
+  }
+  getName(e) {
+    this.data.name = e.detail.value;
+  }
+  getTelephone(e) {
+    this.data.telephone = e.detail.value;
+  }
+  getClassifyAddress(e) {
+    this.data.classifyAddress = e.detail.value;
+  }
+  async selectAddrss(e) {
+    this.animation.height('580rpx').step();
+    this.setData({
+      animationData: this.animation.export()
+    })
+    setTimeout(() => {
+      this.hidden = false;
+      this.$apply();
+    }, 100)
+  }
+  closeModel() {
+    // this.winHeight = "100%";
+    this.animation.height(0).step();
+    this.setData({
+      animationData: this.animation.export()
+    })
+    setTimeout(() => {
+      this.hidden = true;
+      this.$apply();
+    }, 100)
+  }
+}
+
+</script>
+<style lang="less">
+.addressContent {
+  height: auto;
+  background-color: #fff;
+  margin-top: 22rpx;
+}
+
+.addressItem {
+  display: flex;
+  justify-content: space-between;
+  height: 100rpx;
+  border-bottom: 1rpx solid #ccc;
+
+  .itemText {
+    color: #666;
+    width: 24%;
+    margin-left: 31rpx;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 31rpx;
+    height: 100%;
+    align-items: center;
+  }
+
+  .number_input {
+    height: 100%;
+    width: 76%;
+    align-items: center;
+  }
+}
+
+.addressItemDetail {
+  height: 200rpx;
+  width: 100%;
+  margin-left: 31rpx;
+  display: flex;
+  flex-direction: column;
+
+  .itemText {
+    height: 50%;
+    color: #666;
+    width: 24%;
+    font-size: 31rpx;
+    display: flex;
+    align-items: center;
+  }
+
+  .number_input {
+    display: flex;
+    align-items: center;
+    height: 100rpx;
+    width: 100%
+  }
+}
+
+.panle_modelAdd {
+  position: absolute;
+  height: 0rpx;
+  width: 100%;
+  z-index: 1002;
+  background: #ccc;
+  bottom: 0;
+
+  .colse_model {
+    position: absolute;
+    right: 10rpx;
+    top: 10rpx;
+
+    .icon-close {
+      color: #e11500;
+      font-size: 32rpx;
+    }
+  }
+  .head_box{
+    height: 150rpx;
+  }
+  .rule_box {
+    height: 60rpx;
+    padding-left: 30rpx;
+
+  }
+}
+
+
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+</style>

@@ -1,0 +1,130 @@
+<template>
+  <view>
+    <view wx:for='{{addressLists}}' class="address_contain">
+      <view class="address_width">
+        <text class="user_name">{{item.name}}</text>
+        <text class="user_tel">{{item.tel}}</text>
+      </view>
+      <view class="user_address">
+        <text class="address_text">{{item.addres}}</text>
+      </view>
+      <view class="edit_address">
+        <image wx:if="{{item.defaultAdd==true}}" src="../images/shopping_cart_selected_check_two.png">
+        <image wx:if="{{item.defaultAdd==false}}" src="../images/shopping_cart_selected_default_two.png">
+        <text class="default_edit">编辑</text>
+      </view>
+    </view>
+    <view class="detail-bottom">
+      <view class="sy-bottom-address" @tap="goAddAdress()">新增地址</view>
+    </view>
+  </view>
+</template>
+<script>
+// import Searchs from '@/components/search';
+import wepy from 'wepy';
+export default class adress extends wepy.page {
+  config = {
+    navigationBarTitleText: '地址管理'
+  }
+  components = {
+    // search: Searchs,
+  }
+  data = {
+    addressLists: [{ name: 'Mr Wang', tel: '121212121', addres: '中华人民共和国上海市杨浦区五角场镇大中华街道888弄666幢999室', defaultAdd: true },
+      { name: 'Mr Wang', tel: '121212121', addres: '中华人民共和国上海市杨浦区五角场镇大中华街道88888弄666幢999室', defaultAdd: false },
+      { name: 'Mr Wang', tel: '121212121', addres: '中华人民共和国上海市杨浦区五角场镇大中华街道888弄666幢999室', defaultAdd: false }
+    ]
+  }
+  methods = {
+    goAddAdress() {
+      wx.navigateTo({
+        url:'/pages/editAdress'
+      })
+    }
+  }
+}
+
+</script>
+<style lang="less">
+.address_contain {
+  margin-top: 20rpx;
+  height: 278rpx;
+  background-color: #fff;
+  display: inline-block;
+
+  .address_width {
+    width: 92%;
+    margin-left: 4%;
+    margin-top: 22rpx;
+
+    .user_name {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #101010;
+      margin-top: 43rpx;
+    }
+
+    .user_tel {
+      font-size: 32rpx;
+      font-weight: 500;
+      color: #101010;
+      margin-left: 41rpx;
+      margin-top: 43rpx;
+    }
+  }
+
+  .user_address {
+    margin-top: 22rpx;
+    width: 92%;
+    margin-left: 4%;
+    margin-bottom: 30rpx;
+
+    .address_text {
+      font-size: 28rpx;
+      font-weight: 500;
+      color: #666;
+    }
+  }
+
+  .edit_address {
+    width: 92%;
+    margin-left: 4%;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    
+    image {
+      width: 44rpx;
+      height: 44rpx;
+      border: 1px dotted #ccc;
+      margin-top: 17rpx;
+    }
+
+    .default_edit {
+      font-size: 28rpx;
+      color: #666;
+      font-weight: 500;
+      margin-top: 22rpx;
+
+    }
+  }
+}
+.detail-bottom {
+  width: 100%;
+  border-top: 1px solid #ededed;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  .sy-bottom-address{
+    width: 100%;
+    height: 100rpx;
+    background-color:#B4A078;
+    color: #fff;
+    font-weight: bold;
+    font-size: 36rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+</style>

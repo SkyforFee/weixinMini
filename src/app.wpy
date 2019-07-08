@@ -22,12 +22,10 @@ export default class extends wepy.app {
     pages: [
       'pages/index',
       'pages/home',
-      'pages/search',
+      'pages/adress',
       'pages/sign_in',
-      'pages/exchange_goods',
-      'pages/wholesale',
-      'pages/replenishment_goods',
-      'pages/classify',
+      'pages/myWallet',
+      'pages/editAdress',
       'pages/shop_cart',
       'pages/info',
       'pages/myOrders',
@@ -42,7 +40,7 @@ export default class extends wepy.app {
     },
     "tabBar": {
       'color': '#999999',
-      'selectedColor': '#ff6a3c',
+      'selectedColor': '#B4A078',
       'backgroundColor': '#ffffff',
       'borderStyle': 'black',
       "list": [
@@ -51,18 +49,14 @@ export default class extends wepy.app {
           "text": "物语",
           "iconPath": "images/home_icon_story_default.png",
           "selectedIconPath": "images/home_icon_story_select.png"
-        }, {
-          "pagePath": "pages/classify",
-          "text": "格子铺",
-          "iconPath": "images/icon_classify.png",
-          "selectedIconPath": "images/icon_classify_active.png"
         }, 
         // {
-        //   "pagePath": "pages/shop_cart",
-        //   "text": "购物车",
-        //   "iconPath": "images/icon_shop_cart.png",
-        //   "selectedIconPath": "images/icon_shop_cart_active.png"
-        // },
+        //   "pagePath": "pages/classify",
+        //   "text": "格子铺",
+        //   "iconPath": "images/icon_classify.png",
+        //   "selectedIconPath": "images/icon_classify_active.png"
+        // }, 
+        
          {
           "pagePath": "pages/info",
           "text": "我的",
@@ -80,23 +74,24 @@ export default class extends wepy.app {
   constructor() {
     super()
     this.use('requestfix')
+    this.use('promisify');
   }
 
   async onLaunch() {
   }
 
-  sleep(s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
+  // sleep(s) {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve('promise resolved')
+  //     }, s * 1000)
+  //   })
+  // }
 
-  async testAsync() {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
+  // async testAsync() {
+  //   const data = await this.sleep(3)
+  //   console.log(data)
+  // }
 }
 
 </script>

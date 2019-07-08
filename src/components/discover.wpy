@@ -1,16 +1,18 @@
 <template>
   <view class="bc">
     <view class="discover">
-      <view class="discover_title_doc">发现好商品</view>
     </view>
     <view class="discover_list">
-      <navigator class="item" open-type="navigate" wx:for="{{list}}" wx:key="key" url="/pages/goods_detail?id={{item.code}}">
-        <image class="discover_img" src="{{item.logo}}"></image>
+      <navigator class="item" open-type="navigate" wx:for="{{list}}" wx:key="key" url="/pages/goods_detail?id={{item.id}}">
+        <image class="discover_img" src="{{item.mainFigureUrl}}"></image>
         <!-- wx:for="{{item.attrs}}" wx:key="item" -->
         <view class="info">
-          <view>{{item.attrName}}：</view>
+          <view class="item_name">{{item.goodsName}}</view>
           <!-- wx:for="{{item.attrValList}}" wx:key="item" -->
-          <view>{{item.attrVal}} </view>
+        </view>
+        <view class="info_price">
+          <text class="prices">¥{{item.marketPrice}}</text>
+          <text class="stocks">仅剩{{item.attrVal}} </text>
         </view>
       </navigator>
     </view>
@@ -47,55 +49,57 @@ export default class Discover extends wepy.component {
 <style lang="less">
 .discover {
   text-align: center;
-  font-size: 30rpx;
-  padding: 30rpx 0rpx;
+  height: 6rpx;
   position: relative;
 }
-
-.discover_title_doc {
-  display: inline-block;
-  position: relative;
-  z-index: 999;
-  width: 190rpx;
-  background: #f7f7f7;
-}
-
-.discover:before {
-  content: '';
-  height: 1rpx;
-  width: 460rpx;
-  position: absolute;
-  background: #dbdbdb;
-  top: 50rpx;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-}
-
 .discover_list {
   display: flex;
   flex-wrap: wrap;
-
+  justify-content: space-between;
   .discover_img {
     width: 100%;
     height: 390rpx;
   }
 
   .info {
-    padding: 5rpx;
+    margin-left: 32rpx;
     color: #000000;
     font-size: 26rpx;
     line-height: 35rpx;
     display: flex;
     align-items: center;
+    .item_name{
+      font-weight:500;
+      color:#333333;
+      font-size: 28rpx;
+      width: 307rpx;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
-
+  .info_price{
+    margin-top: 19rpx;
+    margin-left: 32rpx;
+    margin-bottom: 31rpx;
+    .prices{
+      color: #FF262C;
+      font-size: 36rpx;
+      font-weight:500;
+    }
+    .stocks{
+      margin-left: 17rpx;
+      color:#999999;
+      font-size:22rpx;
+      font-weight:500;
+    }
+  }
   .item {
-    width: 46%;
+    width: 49%;
     background: #fff;
-    margin-left: 15rpx;
-    margin-right: 15rpx;
-    margin-bottom: 15rpx;
+    // margin-left: 15rpx;
+    // margin-right: 15rpx;
+    margin-bottom: 6rpx;
     // float: left;
   }
 }

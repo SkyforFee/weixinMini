@@ -4,7 +4,7 @@
       <swiper class="swiper" indicator-active-color="{{indicatorActiveColor}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
         <block wx:for="{{adList}}" wx:key="key">
           <swiper-item>
-            <image src="{{item.picUrl}}" class="slide-image" @tap="goToAdvert({{item.advertUrl}})" />
+            <image src="{{item.mainFigureUrl}}" class="slide-image"/>
           </swiper-item>
         </block>
       </swiper>
@@ -20,12 +20,13 @@ import wepy from 'wepy';
 import Discover from '@/components/discover';
 import BottomLoadMore from "../components/common/bottomLoadMore";
 import tip from '@/utils/tip'
+import api from '@/api/api';
 import {
   SYSTEM_INFO
 } from '@/utils/constant';
 export default class first extends wepy.page {
   config = {
-    navigationBarTitleText: '演示商城',
+    navigationBarTitleText: '物语格子',
   }
   components = {
     discover: Discover,
@@ -39,52 +40,63 @@ export default class first extends wepy.page {
     duration: 1000,
     scrollHeight: '',
     isShow: true,
-    adList: [
-      { picUrl: "../images/selected.png", advertUrl: 'hehehe' },
-      { picUrl: "../images/normal.png", advertUrl: 'hehehea' }
-    ],
+    adList: [],
     showLoading: false,
     discoverList: [],
   }
   onLoad() {
+    Promise.all([this.ordinaryGoods(),this.secretGoods()]).then(()=>{
+      this.$apply()
+    })
+    
+
     let systemInfo = wepy.getSystemInfoSync();
     wepy.setStorageSync(SYSTEM_INFO, systemInfo);
     this.scrollHeight = systemInfo.windowHeight;
     this.isShow = true;
-    this.discoverList = [
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
-      { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
-    ];
+    // this.discoverList = [
+    //   { code: 1, logo: "../images/selected.png", attrName: "汉美创意客厅摆件装饰汉美创意客厅摆件装饰", attrVal: '12',price:'66.66' },
+    //   { code: 1, logo: "../images/normal.png", attrName: "美创意客厅摆件装饰", attrVal: '88.88',price:'66.66' },
+    //   { code: 1, logo: "../images/selected.png", attrName: "美创意客厅摆件装饰", attrVal: '99.99' ,price:'66.66'},
+    //   { code: 1, logo: "../images/normal.png", attrName: "美创意客厅摆件装饰", attrVal: '11.11' },
+    //   { code: 1, logo: "../images/selected.png", attrName: "美创意客厅摆件装饰", attrVal: 'haha' },
+    //   { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: '22.22' },
+    //   { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+    //   { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: '33.33' },
+    //   { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: '55.55' },
+    //   { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+    //   { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+    //   { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' },
+    //   { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' },
+    // ];
     // this.showLoading=false;
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        tip.loading()
-        resolve()
-      }, 500);
-    }).then(() => {
-      setTimeout(() => {
-        tip.loaded()
-      }, 1000)
-    })
+    // new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     tip.loading()
+    //     resolve()
+    //   }, 500);
+    // }).then(() => {
+    //   setTimeout(() => {
+    //     tip.loaded()
+    //   }, 1000)
+    // })
+  }
+  async ordinaryGoods(){
+    let json = await api.ordinaryGoods({});
+    this.discoverList = json.resultList
+    
+  };
+  async secretGoods(){
+    let json = await api.secretGoods();
+    this.adList = json.resultList
   }
   onShow() {}
   methods = {
     lower() {
       tip.loading()
-      this.discoverList.push(
-        { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' }, { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' }, { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' }, 
-        )
+      // this.discoverList.push(
+      //   { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' }, { code: 1, logo: "../images/normal.png", attrName: "hehe", attrVal: 'haha' }, { code: 1, logo: "../images/selected.png", attrName: "hehe", attrVal: 'haha' }, 
+      //   )
       tip.loaded()
     }
 

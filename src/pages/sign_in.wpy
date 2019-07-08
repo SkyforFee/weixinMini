@@ -1,55 +1,111 @@
 <template>
-	<view class="container">
-		<image class="bgImg" src="../images/bc_qdyl.png" />
-		<view class="timeFont">
-			<text>现在是{{year}}年{{month}}月{{day}}日{{hour}}时{{minute}}分{{second}}秒。</text>
-			<text>欢迎光临</text>
-		</view>
-	</view>
-	
+  <view class="container">
+    <view class="telephone_view">
+      <text class="before_tel">+86 |</text>
+      <input class="number_input" placeholder="请输入手机号码" maxlength="11" type="tel" bindinput="getInput" />
+    </view>
+    <view class="verifacation_view">
+      <input class="number_input verify_input" placeholder="请输入验证码" maxlength="11" type="" bindinput="getVerification" />
+      <text class="verify_after">获取验证码</text>
+    </view>
+    <view class="sy-bottom" @tap="takeCart">绑定手机号</view>
+    <view class="agreement_area">
+    	<text>绑定即表示您已同意</text>
+    	<text> 《用户服务协议》 </text>
+    </view>
+  </view>
 </template>
 <script>
 import wepy from 'wepy';
-export default class Signin extends wepy.page{
-	config={
-		navigationBarTitleText:'签到'
-	}
-	data={
-      	year:'',
-      	month:'',
-      	day:'',
-      	hour:'',
-      	minute:'',
-      	second:'',
-	}
-	onLoad(){
-		setInterval(()=>{
-			let mydate = new Date();
-			this.year=mydate.getFullYear();
-			this.month=mydate.getMonth()+1;
-			this.day=mydate.getDate();
-			this.hour=mydate.getHours(),
-			this.minute=mydate.getMinutes(),
-			this.second=mydate.getSeconds(),
-			this.$apply()
-		},1000)
-	}
+export default class Signin extends wepy.page {
+  config = {
+    navigationBarTitleText: '秘语格子'
+  }
+  data = {
+    getInput: null,
+    getVerification: null,
+  }
+  getInput(e) { //方法1
+    this.data.getInput = e.detail.value;
+  }
+  getVerification(e){
+  	this.data.getVerification = e.data.value;
+  }
+  onLoad() {
+    setInterval(() => {
+      let mydate = new Date();
+      this.year = mydate.getFullYear();
+      this.month = mydate.getMonth() + 1;
+      this.day = mydate.getDate();
+      this.hour = mydate.getHours(),
+        this.minute = mydate.getMinutes(),
+        this.second = mydate.getSeconds(),
+        this.$apply()
+    }, 1000)
+  }
 }
+
 </script>
-<style lang ="less">
-.container{
-	position: relative;
-	top: 10rpx;
-	color:black;
-	width: 750rpx;
-	height: 400rpx;
-	.bgImg{
-		position: absolute;
-		width: 100%;
-		height: 100%;
-	}
-	.timeFont{
-	position: absolute;
-	}
+<style lang="less">
+page {
+  height: 100%;
+  background: #fff;
 }
+
+.container {
+	margin-top: 100rpx;
+  .number_input {
+	
+  }
+  .telephone_view{
+  	display: flex;
+  	width: 80%;
+  	height: 100rpx;
+  	border-bottom: 1px solid #eee;
+  	justify-content: flex-start;
+  	align-items: center;
+  	margin-left: 10%;
+  	.before_tel{
+		width: 16%;
+		display: flex;
+		justify-content: flex-start;
+  	}
+  }
+  .verifacation_view{
+	display: flex;
+	width: 80%;
+	height: 100rpx;
+	border-bottom: 1px solid #eee;
+	justify-content: flex-start;
+	align-items:center;
+	margin-left: 10%;
+	.verify_input{
+		width: 72%;
+	}
+  }
+  .sy-bottom{
+  	margin-top:120rpx;
+    width: 80%;
+    height: 100rpx;
+    border-radius:49rpx;
+    background:#B4A078;
+    margin-left: 10%;
+    align-items:center;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    font-size: 36rpx;
+    font-weight: bold;
+  }
+  .agreement_area{
+  	width: 100%;
+  	display: flex;
+  	justify-content:center;
+  	margin-top: 50rpx;
+  	font-size: 24rpx;
+  	font-weight: 500;
+  }
+}
+
 </style>

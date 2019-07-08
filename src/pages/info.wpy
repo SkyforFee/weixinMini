@@ -1,57 +1,102 @@
 <template>
-  <view class="container">
-    <view class="infoTitle">
-      <image class="titile_img" src="../images/icon_nav_01_new.png" />
-    </view>
-    <view class="wait_content">
-      <navigator class="wait_item" wx:for="{{myLists}}" open-type="navigate" wx:key="key" url="{{item.url}}?tabNum={{item.code}}" >
-        <image src="{{item.logo}}" class="wait_img" />
-        <text class="wait_text">{{item.name}}</text>
-      </navigator>
-    </view>
-    <view class="money_content">
-      <navigator class="money_item" wx:for="{{moneyList}}" open-type="navigate" wx:key="key" url="{{item.url}}">
-        <image src="{{item.logo}}" class="money_item" />
-        <text class="money_text">{{item.name}}</text>
-      </navigator>
+  <view class="bgColorOver">
+    <view class="container">
+      <view class="occupy_ara"></view>
+      <view class="infoTitle">
+        <image wx:if="{{userInfo.userInfo.avatarUrl}}" class="titile_img" src="{{userInfo.userInfo.avatarUrl}}" />
+        <view class="title_custom">{{userInfo.userInfo.nickName}}</view>
+      </view>
+      <view class="wait_content">
+        <navigator hover-class="none" class="wait_item" wx:for="{{myLists}}" open-type="navigate" wx:key="key" url="{{item.url}}?tabNum={{item.code}}">
+          <view class="img_border">
+            <image src="{{item.logo}}" class="wait_img" />
+          </view>
+          <text class="wait_text">{{item.name}}</text>
+        </navigator>
+      </view>
+      <view class="money_content">
+        <navigator hover-class="none" class="money_item" wx:for="{{moneyList}}" open-type="navigate" wx:key="key" url="{{item.url}}">
+          <view class="img_border_2">
+            <image src="{{item.logo}}" class="money_img" />
+            <text class="money_text">{{item.name}}</text>
+          </view>
+          <view class="item_arrow"></view>
+        </navigator>
+      </view>
     </view>
   </view>
 </template>
 <script>
 import wepy from 'wepy';
+import {
+  USER_INFO
+} from '@/utils/constant';
 export default class first extends wepy.page {
   config = {
-    navigationBarTitleText: '个人中心'
+    navigationBarTitleText: '我的'
   }
   data = {
+    userInfo: {},
     myLists: [
-      { logo: "../images/selected.png", name: '待付款', url: '/pages/myOrders',code:0 },
-      { logo: "../images/normal.png", name: '待收货', url: '/pages/myOrders',code:1  },
-      { logo: "../images/selected.png", name: '待评价', url: '/pages/myOrders',code:2  },
-      { logo: "../images/normal.png", name: '售后', url: '/pages/myOrders',code:3  },
+      { logo: "../images/ic_unpaid.png", name: '待付款', url: '/pages/myOrders', code: 0 },
+      { logo: "../images/ic_paid.png", name: '待收货', url: '/pages/myOrders', code: 1 },
+      { logo: "../images/ic_expired.png", name: '已收货', url: '/pages/myOrders', code: 2 },
     ],
     moneyList: [
-      { logo: "../images/normal.png", name: '我的钱包', url: '' },
-      { logo: "../images/selected.png", name: '地址管理', url: '' },
-      { logo: "../images/normal.png", name: '绑定手机', url: '' },
+      { logo: "../images/mine_icon_wallet.png", name: '我的钱包', url: '/pages/myWallet' },
+      { logo: "../images/mine_icon_point.png", name: '地址管理', url: '/pages/adress' },
+      { logo: "../images/mine_icon_phone.png", name: '绑定手机', url: '/pages/sign_in' },
+      { logo: "../images/mine_icon_shop.png", name: '购物车', url: '/pages/shop_cart' },
     ]
   }
-  onload() {}
-  methods = {
+  onLoad() {
+    this.userInfo = wx.getStorageSync(USER_INFO);
   }
 
 }
 
 </script>
 <style lang="less">
+page{
+  height:100%;
+  background:#fff;
+}
+.bgColorOver{
+  overflow: hidden;
+  height: 100%;
+}
+
+.occupy_ara {
+  height: 40rpx;
+  background: #fff;
+  width: 100%;
+}
+
 .infoTitle {
   display: flex;
-  height: 210rpx;
-  justify-content: center;
+  height: 200rpx;
+  justify-content: start;
+  margin: 40rpx 30rpx 73rpx 30rpx;
+  background: rgba(180, 160, 120, 1);
+  border-radius: 30px;
   align-items: center;
 
   .titile_img {
-    height: 200rpx;
+    height: 150rpx;
+    width: 150rpx;
+    border-radius: 50%;
+    margin-left: 40rpx;
+  }
+
+  .title_custom {
+    width: 250rpx;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 40rpx;
+    font-weight: bold;
+    color: rgba(255, 254, 254, 1);
+    margin-left: 40rpx;
   }
 }
 
@@ -60,15 +105,21 @@ export default class first extends wepy.page {
   justify-content: space-around;
   height: 200rpx;
   width: 100%;
-  background: #ccc;
 
   .wait_item {
     width: 100%;
     height: 160rpx;
 
-    .wait_img {
-      height: 100%;
-      width: 100%;
+    .img_border {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 22rpx;
+
+      .wait_img {
+        width: 66rpx;
+        height: 66rpx;
+        border: 1px dotted #ccc;
+      }
     }
 
     .wait_text {
@@ -76,32 +127,54 @@ export default class first extends wepy.page {
       display: flex;
       justify-content: center;
       align-items: center;
+      color: #666;
+      font-size: 24rpx;
+      font-weight: 400;
     }
   }
 }
 
 .money_content {
   display: flex;
-  justify-content: space-around;
-  height: 200rpx;
+  flex-direction: column;
+  // height: 200rpx;
   width: 100%;
 
   .money_item {
     width: 100%;
-    height: 160rpx;
+    height: 30rpx;
+    display: flex;
+    margin-bottom: 50rpx;
+    justify-content: space-between;
 
-    .money_img {
-      height: 100%;
-      width: 100%;
+    .img_border_2 {
+
+      display: flex;
+      flex-direction: row;
+      margin-left: 27rpx;
+
+      .money_img {
+        border: 1px dotted #ccc;
+        height: 32rpx;
+        width: 32rpx;
+      }
+
+      .money_text {
+        margin-left: 27rpx;
+        font-size: 32rpx;
+        font-weight: 500;
+        color: rgba(102, 102, 102, 1)
+      }
     }
 
-    .money_text {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .item_arrow {
+      margin-right: 34rpx;
+      position: relative;
+      top: 6rpx;
+      border: 6px solid #fff;
+      border-left: 6px solid #999;
+      background: rgba(153, 153, 153, 1);
     }
   }
 }
-
 </style>

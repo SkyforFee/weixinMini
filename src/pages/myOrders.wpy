@@ -19,7 +19,7 @@ export default class myOrders extends wepy.page{
 		this.currentTab=option.tabNum
 	}
 	data={
-		tabList: ["待付款", "待收货", "已收货", "已取消","售后"],
+		tabList: ["待付款", "待收货", "已收货", "已取消"],
 		currentTab:0,
 	}
 } 

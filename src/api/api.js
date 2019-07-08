@@ -3,7 +3,7 @@ import {
 } from '@/utils/wxRequest';
 
 let env = "-test" //-dev 或者 -test
-const apiMall = 'https://sujiefs.com/'
+const apiMall = 'http://106.52.125.19:6008'
 // const apiMall = 'http://localhost:8080/'
 
 /**
@@ -11,7 +11,7 @@ const apiMall = 'https://sujiefs.com/'
  * @param  {[type]} params [description]
  * @return {[type]}        [description]
  */
-const getDiscoverList = (params) => wxRequest(params, apiMall + '/goods/list?cateidOne=1&cateidTwo=0&price=0&sales=2');
+const loginTest = (params) => wxRequest(params, apiMall + '/api/wxOpenUser/loginTest');
 
 //微信的jscode换取sessionKey
 const wxJsCode2Session = (params) => wxRequest(params, apiMall + "/api/wechat/jscode2session");
@@ -19,7 +19,12 @@ const user2session = (params) => wxRequest(params, apiMall + "/api/wechat/user2s
 
 //商品接口---begin
 //首页发现商品接口
-const hostGoodsList = (params) => wxRequest(params, apiMall + '/api/home/hostGoodsList');
+const ordinaryGoods = (params)=>wxRequest(params,apiMall+'/api/goods/ordinary/goods/list')
+const secretGoods =(params)=>wxRequest(params,apiMall+'/api/goods/secret/goods/list')
+const goodDetail = (params) => wxRequest(params, apiMall + '/api/goods/goodDetail');
+const getPronvince = (params)=>wxRequest(params,apiMall+'/api/sys/list')
+
+
 const getHomeDisvocerList = (params) => wxRequest(params, apiMall + '/api/mall/discoverList');
 //查询商品列表
 const getGoodsList = (params) => wxRequest(params, apiMall + '/api/mall/searchGoodsList');
@@ -145,8 +150,13 @@ const childGoodsCatetoryList = (params) => wxRequest(params, apiMall + '/api/mal
 const getAdList = (params) => wxRequest(params, apiMall + '/api/adverts/list');
 
 export default {
-  hostGoodsList,
-  getDiscoverList,
+  loginTest,
+  ordinaryGoods,
+  secretGoods,
+  goodDetail,
+  getPronvince,
+  // hostGoodsList,
+  // getDiscoverList,
   getHomeDisvocerList,
   getGoodsList,
   goodsDetail,

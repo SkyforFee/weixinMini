@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -10,7 +10,7 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"appid": "wxaddc644b2f011e0d",
+	"appid": "wx3a6f218bd7a53658",
 	"projectname": "myproject",
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
