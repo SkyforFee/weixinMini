@@ -11,7 +11,7 @@
       <view class="edit_address">
         <image wx:if="{{item.defaultAdd==true}}" src="../images/shopping_cart_selected_check_two.png">
         <image wx:if="{{item.defaultAdd==false}}" src="../images/shopping_cart_selected_default_two.png">
-        <text class="default_edit">编辑</text>
+        <text class="default_edit">编辑 </text>
       </view>
     </view>
     <view class="detail-bottom">
